@@ -7,7 +7,7 @@ from flask_heroku import Heroku
 app = Flask(__name__)
 heroku = Heroku(app)
 
-app.config["SQLALCHEMY_DATABASE-URL"] = "postgres://fwxorwkioztovh:8174d7631ed494e7a733e29c1c119529287a13a40c735f8796931001c8c7f68a@ec2-174-129-252-226.compute-1.amazonaws.com:5432/d2tn72tnu61a0v"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://fwxorwkioztovh:8174d7631ed494e7a733e29c1c119529287a13a40c735f8796931001c8c7f68a@ec2-174-129-252-226.compute-1.amazonaws.com:5432/d2tn72tnu61a0v"
 
 CORS(app)
 
@@ -29,7 +29,7 @@ class TopicSchema(ma.Schema):
         fields = ("id", "title", "description")
 
 topic_schema = TopicSchema()
-topics_schema = TopicsSchema(many=True)
+topics_schema = TopicSchema(many=True)
 
 @app.route("/topics", methods=["GET"])
 def get_topics():
@@ -49,7 +49,7 @@ def add_topics():
     created_topic = Topic.query.get(new_topic.id)
     return todo_schema.jsonify(created_topic)
 
-@app.route("/topic/<id>", method=["PUT"])
+@app.route("/topic/<id>", methods=["PUT"])
 def update_topic(id):
     topic = Topic.query.get(id)
 
